@@ -9,9 +9,10 @@ pipeline {
     stages {
         stage('Checkout Source') {
             steps {
-                git 'https://github.com/your_github_username/Portfolio-CI-CD.git'
+                git('https://github.com/Raos0nu/Portfolio-CI-CD.git')
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -19,15 +20,17 @@ pipeline {
                 }
             }
         }
+
         stage('Push Docker Image') {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', REGISTRY_CREDENTIAL) {
-                        dockerImage.push('latest')
+                        dockerImage.push('latest') 
                     }
                 }
             }
         }
+
         stage('Deploy to Minikube') {
             steps {
                 sh 'kubectl apply -f deployment.yaml'
